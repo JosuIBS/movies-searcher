@@ -118,3 +118,14 @@
   border-color: #646cff;
   box-shadow: 0 0 0 2px rgba(100, 108, 255, 0.2);
 }
+
+.like-button {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #d00;
+}
+.like-button:hover {
+  opacity: 0.8;
+}
