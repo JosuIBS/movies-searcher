@@ -1,25 +1,11 @@
 import "./App.css";
-import { useEffect, useState } from "react";
-import { Movie } from "./dominio/Movies";
-import { MovieJsonRepository } from "./infraestructura/MovieJsonRepository";
-import { SearchMovies } from "./servicio/SearchMovie";
+import { useState } from "react";
 import { Movie as MovieCard } from "./components/Movie";
+import { useMovieSearch } from "./servicio/useMovieSearch";
 
 export const App = () => {
-  const [movies, setMovies] = useState<Movie[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-
-  useEffect(() => {
-    const repo = new MovieJsonRepository();
-    const searcher = new SearchMovies(repo);
-
-    const load = async () => {
-      const results = await searcher.execute(searchTerm);
-      setMovies(results);
-    };
-
-    load();
-  }, [searchTerm]);
+  const movies = useMovieSearch(searchTerm);
 
   return (
     <div className="App">
