@@ -9,6 +9,10 @@ const movies: MovieType[] = moviesData as MovieType[];
 export const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
+  const filteredMovies = movies.filter((movie) =>
+    movie.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="App">
       <header className="app-header">
@@ -28,13 +32,9 @@ export const App = () => {
         </div>
 
         <div className="movie-list">
-          {moviesData
-            .filter((movie) =>
-              movie.title.toLowerCase().includes(searchTerm.toLowerCase())
-            )
-            .map((movie) => (
-              <Movie key={movie.id} title={movie.title} year={movie.year} />
-            ))}
+          {filteredMovies.map((movie) => (
+            <Movie key={movie.id} title={movie.title} year={movie.year} />
+          ))}
         </div>
       </main>
     </div>
