@@ -4,7 +4,7 @@ import { describe, it, expect } from "vitest";
 import { App } from "./App.jsx";
 
 describe("App Component", () => {
-  it.only("Se muestra la película Inception cuando se busca por título", async () => {
+  it("Se muestra la película Inception cuando se busca por título", async () => {
     render(<App />);
 
     const input = screen.getByPlaceholderText(/buscar películas por título/i);
@@ -14,9 +14,13 @@ describe("App Component", () => {
     expect(movie).toBeInTheDocument();
   });
 
-  it("Comprobamos que no se muestran resultados si no hay incidencias", () => {
+  it("Comprobamos que no se muestran resultados si no hay incidencias", async () => {
     render(<App />);
-    const subtitle = screen.getByText(/encuentra tu película favorita/i);
-    expect(subtitle).toBeInTheDocument();
+
+    const input = screen.getByPlaceholderText(/buscar películas por título/i);
+    await userEvent.type(input, "The Lord of the Rings");
+
+    const movie = screen.queryByText("The Lord of the Rings");
+    expect(movie).not.toBeInTheDocument();
   });
 });
