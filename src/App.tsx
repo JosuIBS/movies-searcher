@@ -1,17 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./App.css";
-import movies from "./data/movies.json";
+import moviesData from "./data/movies.json";
+import { Movie } from "./components/Movie.tsx";
+import { Movie as MovieType } from "./types/types.ts";
 
-const Movie = ({ title, year }) => {
-  return (
-    <div className="movie-card">
-      <div className="movie-info">
-        <h3 className="movie-title">{title}</h3>
-        <p className="movie-year">{year}</p>
-      </div>
-    </div>
-  );
-};
+const movies: MovieType[] = moviesData as MovieType[];
 
 export const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -35,7 +28,7 @@ export const App = () => {
         </div>
 
         <div className="movie-list">
-          {movies
+          {moviesData
             .filter((movie) =>
               movie.title.toLowerCase().includes(searchTerm.toLowerCase())
             )
