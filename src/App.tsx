@@ -1,17 +1,25 @@
-import { useState } from "react";
 import "./App.css";
-import moviesData from "./data/movies.json";
-import { Movie } from "./components/Movie.tsx";
-import { Movie as MovieType } from "./types/types.ts";
-
-const movies: MovieType[] = moviesData as MovieType[];
+import { useEffect, useState } from "react";
+import { Movie } from "./dominio/Movies";
+import { MovieJsonRepository } from "./infraestructura/MovieJsonRepository";
+import { SearchMovies } from "./servicio/SearchMovie";
+import { Movie as MovieCard } from "./components/Movie";
 
 export const App = () => {
+  const [movies, setMovies] = useState<Movie[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredMovies = movies.filter((movie) =>
-    movie.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  useEffect(() => {
+    const repo = new MovieJsonRepository();
+    const searcher = new SearchMovies(repo);
+
+    const load = async () => {
+      const results = await searcher.execute(searchTerm);
+      setMovies(results);
+    };
+
+    load();
+  }, [searchTerm]);
 
   return (
     <div className="App">
@@ -32,8 +40,8 @@ export const App = () => {
         </div>
 
         <div className="movie-list">
-          {filteredMovies.map((movie) => (
-            <Movie key={movie.id} title={movie.title} year={movie.year} />
+          {movies.map((movie) => (
+            <MovieCard key={movie.id} title={movie.title} year={movie.year} />
           ))}
         </div>
       </main>
