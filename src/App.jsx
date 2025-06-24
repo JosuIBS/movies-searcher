@@ -34,17 +34,14 @@ export const App = () => {
           />
         </div>
 
-        {/* Tu código aquí */}
-
-        <div className="placeholder">
-          <p>
-            📝 <strong>Tu tarea:</strong> Crear un buscador que permita filtrar
-            películas por título
-          </p>
-          <p>
-            📊 <strong>Datos disponibles:</strong> {movies.length} películas en
-            el archivo movies.json
-          </p>
+        <div className="movie-list">
+          {movies
+            .filter((movie) =>
+              movie.title.toLowerCase().includes(searchTerm.toLowerCase())
+            )
+            .map((movie) => (
+              <Movie key={movie.id} title={movie.title} year={movie.year} />
+            ))}
         </div>
       </main>
     </div>
