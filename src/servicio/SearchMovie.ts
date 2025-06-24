@@ -1,5 +1,5 @@
-import { MovieRepository } from "../dominio/MovieRepository.ts";
-import { Movie } from "../dominio/Movies.ts";
+import { MovieRepository } from "../dominio/MovieRepository";
+import { Movie } from "../dominio/Movies";
 
 export class SearchMovies {
   constructor(private readonly repository: MovieRepository) {}
